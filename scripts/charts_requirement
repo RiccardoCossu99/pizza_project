@@ -28,7 +28,21 @@ The calculation is done by summing the total_price for each pizza_category, divi
 
 --Percent of total sales by pizza category:
 SELECT 
-    pizza_category,
-    SUM(total_price) * 100 / (SELECT SUM(total_price) FROM pizza_sales) AS percent_tot_sales
+	pizza_category,
+	CAST(SUM(total_price) * 100 / (SELECT SUM(total_price) FROM pizza_sales) AS DECIMAL(10,2)) AS percent_tot_sales
 FROM pizza_sales
-GROUP BY pizza_category;
+GROUP BY pizza_category 
+ORDER BY percent_tot_sales;
+
+📊 Percentage of Total Sales by Pizza Size
+This query calculates the percentage contribution of each pizza size to the overall sales revenue.
+
+For each pizza_size, it sums the total_price, divides it by the total sales across all sizes, and multiplies by 100 to express the result as a percentage.
+
+--Percent of total sales by pizza size:
+SELECT 
+    pizza_size,
+    CAST(SUM(total_price) * 100 / (SELECT SUM(total_price) FROM pizza_sales) AS DECIMAL(10,2)) AS percent_tot_sales
+FROM pizza_sales
+GROUP BY pizza_size
+ORDER BY percent_tot_sales DESC;
