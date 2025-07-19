@@ -72,3 +72,56 @@ SELECT TOP 5
 FROM pizza_sales
 GROUP BY pizza_name_id
 ORDER BY total_revenue ASC;
+
+🍕 Top 5 Most Sold Pizzas by Quantity
+This query identifies the five pizzas that were ordered the most, based on total quantity sold.
+
+It groups the data by pizza_name_id, sums the quantity field, and then orders the results in descending order to highlight the most frequently sold pizzas.
+
+--Top 5 pizzas by quantity:
+SELECT TOP 5
+    pizza_name_id,
+    SUM(quantity) AS total_quantity
+FROM pizza_sales
+GROUP BY pizza_name_id
+ORDER BY total_quantity DESC;
+
+🍕 Bottom 5 Least Sold Pizzas by Quantity
+This query identifies the five pizzas with the lowest total quantity sold.
+
+It groups the data by pizza_name_id, sums the quantity, and then sorts the results in ascending order to show the least popular pizzas.
+
+--Bottom 5 pizzas by quantity:
+SELECT TOP 5
+    pizza_name_id,
+    SUM(quantity) AS total_quantity
+FROM pizza_sales
+GROUP BY pizza_name_id
+ORDER BY total_quantity ASC;
+
+📦 Top 5 Most Ordered Pizzas by Number of Orders
+This query identifies the five pizzas that appeared in the highest number of distinct orders, based on order_id.
+
+It groups the data by pizza_name_id, counts the number of unique orders each pizza was included in, and orders the results in descending order to highlight the most frequently ordered pizzas.
+
+--Top 5 pizzas by number of orders:
+SELECT TOP 5
+    pizza_name_id,
+    COUNT(DISTINCT order_id) AS total_orders
+FROM pizza_sales
+GROUP BY pizza_name_id
+ORDER BY total_orders DESC;
+
+📦 Bottom 5 Least Ordered Pizzas by Number of Orders
+This query identifies the five pizzas that appeared in the fewest number of distinct orders.
+
+It groups the data by pizza_name_id, counts unique order_ids, and orders the result in ascending order to highlight the least ordered pizzas.
+
+--Bottom 5 pizzas by number of orders:
+SELECT TOP 5
+    pizza_name_id,
+    COUNT(DISTINCT order_id) AS total_orders
+FROM pizza_sales
+GROUP BY pizza_name_id
+ORDER BY total_orders ASC;
+
