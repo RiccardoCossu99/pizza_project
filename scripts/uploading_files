@@ -1,0 +1,39 @@
+📦 Importing pizza_sales.csv into SQL Server
+This SQL script loads data from the pizza_sales.csv file into a SQL Server table named pizza_sales.
+
+-- Drops the table if it already exists to avoid conflicts
+DROP TABLE IF EXISTS pizza_sales;
+
+-- Creates the table with the appropriate structure to match the CSV file
+CREATE TABLE pizza_sales (
+    pizza_id INT,
+    order_id INT,
+    pizza_name_id VARCHAR(100),
+    quantity INT,
+    order_date VARCHAR(100),         -- Kept as VARCHAR to avoid format issues during import
+    order_time TIME,
+    unit_price DECIMAL(5,2),
+    total_price DECIMAL(6,2),
+    pizza_size VARCHAR(10),
+    pizza_category VARCHAR(50),
+    pizza_ingredients VARCHAR(MAX),
+    pizza_name VARCHAR(100)
+);
+
+-- Removes all data from the table in case you're reloading the file
+TRUNCATE TABLE dbo.pizza_sales;
+
+-- Loads data from the CSV file using BULK INSERT
+BULK INSERT dbo.pizza_sales
+FROM 'C:\Users\cossu\Downloads\Portfolio Projects\Pizza Project\pizza_sales.csv'
+WITH (
+    FORMAT = 'CSV',                 -- Specifies CSV format
+    FIRSTROW = 2,                   -- Skips the header row
+    FIELDTERMINATOR = ',',          -- Fields are separated by commas
+    ROWTERMINATOR = '\n',           -- Rows are separated by newline characters
+    CODEPAGE = '65001',             -- Specifies UTF-8 encoding
+    TABLOCK                         -- Improves bulk insert performance
+);
+
+📌 Notes:
+The order_date column is defined as VARCHAR to avoid conversion errors during import, as the date format in the file is d/M/yyyy.
