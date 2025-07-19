@@ -46,3 +46,29 @@ SELECT
 FROM pizza_sales
 GROUP BY pizza_size
 ORDER BY percent_tot_sales DESC;
+
+💰 Top 5 Best-Selling Pizzas by Revenue
+This query identifies the top 5 pizzas that generated the highest total revenue.
+
+It groups the data by pizza_name_id, calculates the total revenue (SUM(total_price)), and then orders the results in descending order to show the pizzas with the highest sales. The TOP 5 keyword limits the output to the five best performers.
+
+--Top 5 pizzas by revenue:
+SELECT TOP 5
+    pizza_name_id,
+    SUM(total_price) AS total_revenue
+FROM pizza_sales
+GROUP BY pizza_name_id
+ORDER BY total_revenue DESC;
+
+💸 Bottom 5 Pizzas by Revenue
+This query identifies the five pizzas that generated the lowest total revenue.
+
+It groups the data by pizza_name_id, calculates the total revenue (SUM(total_price)), and then orders the results in ascending order to show the least profitable pizzas. The TOP 5 clause limits the output to the bottom five.
+
+--Bottom 5 pizzas by revenue:
+SELECT TOP 5
+    pizza_name_id,
+    SUM(total_price) AS total_revenue
+FROM pizza_sales
+GROUP BY pizza_name_id
+ORDER BY total_revenue ASC;
