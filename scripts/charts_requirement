@@ -20,3 +20,15 @@ SELECT
 FROM pizza_sales
 GROUP BY DATENAME(MONTH, TRY_CONVERT(DATE, order_date, 103))
 ORDER BY order_per_month DESC;
+
+📊 Percentage of Total Sales by Pizza Category
+This query calculates the percentage contribution of each pizza category to the total sales revenue.
+
+The calculation is done by summing the total_price for each pizza_category, dividing it by the total sales across all categories, and multiplying by 100 to get the percentage.
+
+--Percent of total sales by pizza category:
+SELECT 
+    pizza_category,
+    SUM(total_price) * 100 / (SELECT SUM(total_price) FROM pizza_sales) AS percent_tot_sales
+FROM pizza_sales
+GROUP BY pizza_category;
