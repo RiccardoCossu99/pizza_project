@@ -1,1 +1,22 @@
+📊 Orders by Weekday
+This query calculates the number of unique orders (order_id) for each day of the week. It is useful for identifying which weekdays are the busiest for pizza orders.
 
+Since the order_date column is stored as VARCHAR, we first convert it to a proper DATE format using TRY_CONVERT with style 103 (dd/MM/yyyy). Then, we extract the weekday name using DATENAME.
+
+--Orders per weekday:
+SELECT 
+    DATENAME(WEEKDAY, TRY_CONVERT(DATE, order_date, 103)) AS weekday,
+    COUNT(DISTINCT order_id) AS order_per_day
+FROM pizza_sales
+GROUP BY DATENAME(WEEKDAY, TRY_CONVERT(DATE, order_date, 103));
+
+📊 Orders by Month
+This query returns the number of unique orders (order_id) for each month based on the order_date field. It helps identify which months had the highest order volume.
+
+--Orders per month:
+SELECT 
+    DATENAME(MONTH, TRY_CONVERT(DATE, order_date, 103)) AS month,
+    COUNT(DISTINCT order_id) AS order_per_month
+FROM pizza_sales
+GROUP BY DATENAME(MONTH, TRY_CONVERT(DATE, order_date, 103))
+ORDER BY order_per_month DESC;
